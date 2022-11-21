@@ -15,7 +15,7 @@ const routes = (app: Express) => {
   app.get("/healthcheck", (_: Request, res: Response) => res.sendStatus(200));
 
   app.get("/test", (req, res) => {
-    res.status(200).send("Hello World LawSuit");
+    res.status(200).send("Hello World JusBrasil");
   });
 }
 
