@@ -1,14 +1,14 @@
 version: '3.7'
 services:
-  # jusbrasil-service:
-  #   container_name: jusbrasil-service
-  #   restart: unless-stopped
-  #   environment:
-  #     - NODE_ENV=production
-  #   build:
-  #     context: jusbrasil-service
-  #   ports:
-  #     - "3001:3001"
+  jusbrasil-service:
+    container_name: jusbrasil-service
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    build:
+      context: jusbrasil-service
+    ports:
+      - "3001:3001"
   lawsuit-service:
     container_name: lawsuit-service
     restart: unless-stopped

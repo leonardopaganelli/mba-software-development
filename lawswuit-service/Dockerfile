@@ -14,6 +14,8 @@ RUN rm -rf src/node_modules && cp -a /tmp/node_modules /src/
 
 WORKDIR /src
 
-RUN yarn dist
+COPY /scripts ./
 
-CMD ["node", "dist/index.js"]
+RUN yarn build
+
+ENTRYPOINT ["sh", "/src/start.sh"]

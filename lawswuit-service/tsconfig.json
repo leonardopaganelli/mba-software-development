@@ -18,6 +18,7 @@
     "skipLibCheck": true,
     "paths": {
       "@utils/*": ["./src/utils/*"],
+      "@scripts/*": ["./scripts/*"]
     }
   },
   "include": ["src/**/*"],
