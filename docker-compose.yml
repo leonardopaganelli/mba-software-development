@@ -41,6 +41,17 @@ services:
     depends_on:
       - kafka
 
+  jusbrasil-db:
+    container_name: jusbrasil-db
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: jusbrasil-db
+
   jusbrasil-service:
     container_name: jusbrasil-service
     restart: unless-stopped
@@ -51,6 +62,7 @@ services:
     depends_on:
       - zookeeper
       - kafka
+      - jusbrasil-db
 
   lawsuit-service:
     container_name: lawsuit-service

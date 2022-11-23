@@ -19,7 +19,8 @@
     "paths": {
       "@utils/*": ["./src/utils/*"],
       "@scripts/*": ["./scripts/*"],
-      "@repositories/*": ["./src/repositories/*"]
+      "@repositories/*": ["./src/repositories/*"],
+      "@clients/*": ["./src/clients/*"]
     }
   },
   "include": ["src/**/*"],

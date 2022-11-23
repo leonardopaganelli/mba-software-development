@@ -1,10 +1,12 @@
 import { Express } from "express";
-import { Kafka, KafkaConfig, Producer } from "kafkajs";
+import { Kafka } from "kafkajs";
 import config from "@utils/config";
 
-const { KAFKA_HOST, KAFKA_PORT } = config;
+const { KAFKA_HOST, KAFKA_PORT, KAFKA_DISABLED } = config;
 
 async function kafka(app: Express) {
+  if (!!KAFKA_DISABLED && KAFKA_DISABLED === "true") return;
+
   const kafkaInstance = new Kafka({
     clientId: "jusbrasil-service",
     brokers: [`${KAFKA_HOST}:${KAFKA_PORT}`],
@@ -18,7 +20,7 @@ async function kafka(app: Express) {
   });
 
   await producer.connect();
-  console.log("kafka connected")
+  console.log("kafka connected");
 }
 
 export default kafka;

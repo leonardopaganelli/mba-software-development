@@ -20,7 +20,9 @@
       "@utils/*": ["./src/utils/*"],
       "@scripts/*": ["./scripts/*"],
       "@repositories/*": ["./src/repositories/*"],
-      "@customTypes/*": ["./src/types/*"]
+      "@customTypes/*": ["./src/types/*"],
+      "@clients/*": ["./src/clients/*"],
+      "@schemas/*": ["./src/schemas/*"]
     }
   },
   "include": ["src/**/*"],
