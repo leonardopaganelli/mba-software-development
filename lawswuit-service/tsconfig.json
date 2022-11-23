@@ -18,7 +18,8 @@
     "skipLibCheck": true,
     "paths": {
       "@utils/*": ["./src/utils/*"],
-      "@scripts/*": ["./scripts/*"]
+      "@scripts/*": ["./scripts/*"],
+      "@repositories/*": ["./src/repositories/*"]
     }
   },
   "include": ["src/**/*"],

@@ -11,7 +11,7 @@ startService() {
   echo "Starting jusbrasil service..."
 #   yarn migration:run
 #   yarn schema:register
-  PORT=${PORT:-3001} node dist/index.js
+  NODE_ENV=production node dist/index.js
 }
 
 echo "Initializing jusbrasil service environment..."

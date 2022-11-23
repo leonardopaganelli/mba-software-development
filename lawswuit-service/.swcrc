@@ -9,7 +9,8 @@
     "target": "es2020",
     "paths": {
       "@utils/*": ["./src/utils/*"],
-      "@scripts/*": ["./scripts/*"]
+      "@scripts/*": ["./scripts/*"],
+      "@repositories/*": ["./src/repositories/*"]
     },
     "baseUrl": "."
   },

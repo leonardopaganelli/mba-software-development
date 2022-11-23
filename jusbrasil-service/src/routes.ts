@@ -17,6 +17,22 @@ const routes = (app: Express) => {
   app.get("/test", (req, res) => {
     res.status(200).send("Hello World JusBrasil");
   });
+
+  app.get("/message", async (req, res) => {
+     const message = {
+      date: "2022",
+      document: {
+        status: "Andamento",
+        description: "Expedição de Certidão.",
+      }
+     };
+
+     await req.producer.send({
+       topic: "lawsuit-update",
+       messages: [{ value: JSON.stringify(message) }],
+     });
+    res.status(200).send(`Mensagem enviada com sucesso: ${JSON.stringify(message)}`);
+  });
 }
 
 export default routes;
