@@ -11,6 +11,8 @@ export const databaseConfig: Options = {
   port: config.DB_PORT as number,
   define: {
     underscored: true,
+    createdAt: false,
+    updatedAt: false
   },
 };
 

@@ -3,7 +3,6 @@ import config from "@utils/config";
 
 const { KAFKA_HOST, KAFKA_PORT } = config;
 
-
 async function kafka() {
   const kafkaInstance = new Kafka({
     clientId: "lawsuit-service",

@@ -13,7 +13,8 @@
       "@repositories/*": ["./src/repositories/*"],
       "@customTypes/*": ["./src/types/*"],
       "@clients/*": ["./src/clients/*"],
-      "@schemas/*": ["./src/schemas/*"]
+      "@schemas/*": ["./src/schemas/*"],
+      "@models/*": ["./src/database/models/*"]
     },
     "baseUrl": "."
   },
