@@ -18,7 +18,7 @@ const routes = (app: Express) => {
    */
   app.get("/healthcheck", (_: Request, res: Response) => res.sendStatus(200));
 
-  app.get("/lawsuit", async ({ params: {}}, res) => {
+  app.get("/lawsuit", async (_:Request, res: Response) => {
     try {
       const lawsuits = await findAllLawsuits();
       res.status(200).send(`${JSON.stringify(lawsuits, null, 2)}`);
@@ -27,6 +27,7 @@ const routes = (app: Express) => {
       res.sendStatus(500);
     }
   });
+
   app.get(
     "/lawsuit/:lawsuitId",
     async (req: Request<ReadLawsuitByIdInput["params"]>, res) => {

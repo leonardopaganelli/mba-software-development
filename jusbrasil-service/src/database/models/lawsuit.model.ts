@@ -17,7 +17,7 @@ export class Lawsuit extends Model<
   declare nature: string;
   declare judicialBranch: string;
   declare initDate: Date;
-  declare amountInControversy: Number;
+  declare amountInControversy: number;
 }
 
 Lawsuit.init(

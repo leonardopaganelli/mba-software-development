@@ -1,4 +1,4 @@
-import { Kafka, KafkaConfig, logLevel } from "kafkajs";
+import { Kafka } from "kafkajs";
 import config from "@utils/config";
 
 const { KAFKA_HOST, KAFKA_PORT } = config;

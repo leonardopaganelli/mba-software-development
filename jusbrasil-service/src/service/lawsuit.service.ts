@@ -93,7 +93,7 @@ async function findOneLawsuit(id: string) {
       return map;
     },
     []
-  );;
+  );
 
   return {
     ...lawsuit,
