@@ -4,13 +4,14 @@ import swaggerUi from 'swagger-ui-express';
 import { version } from "../../package.json";
 
 const options: swaggerJsdoc.Options = {
-    definition: {
-      info: {
-        title:"REST API Docs",
-        version
-      },
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "REST API Docs",
+      version,
     },
-    apis: ["./src/routes.ts", "./src/schema/*.ts"]
+  },
+  apis: ["./src/routes.ts"],
 };
 
 const swaggerSpec = swaggerJsdoc(options);

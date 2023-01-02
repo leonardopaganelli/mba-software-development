@@ -23,7 +23,8 @@
       "@customTypes/*": ["./src/types/*"],
       "@clients/*": ["./src/clients/*"],
       "@schemas/*": ["./src/schemas/*"],
-      "@models/*": ["./src/database/models/*"]
+      "@models/*": ["./src/database/models/*"],
+      "@services/*": ["./src/service/*"]
     }
   },
   "include": ["src/**/*"],

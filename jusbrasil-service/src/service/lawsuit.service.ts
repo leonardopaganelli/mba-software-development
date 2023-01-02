@@ -14,7 +14,17 @@ interface document {
 }
 
 async function findAllLawsuits() {
-  return (await Lawsuit.findAll()).map((u) => u.get());
+  return (
+    await Lawsuit.findAll({
+      include: [
+        {
+          model: Involved,
+          attributes: ["acused"],
+        },
+      ],
+      raw: true
+    })
+  )
 }
 
 async function findOneLawsuit(id: string) {

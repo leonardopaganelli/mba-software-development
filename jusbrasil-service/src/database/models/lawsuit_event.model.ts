@@ -1,4 +1,5 @@
 import {
+  CreationOptional,
   DataTypes,
   InferAttributes,
   InferCreationAttributes,
@@ -12,7 +13,7 @@ export class LawsuitEvent extends Model<
   InferAttributes<LawsuitEvent>,
   InferCreationAttributes<LawsuitEvent>
 > {
-  declare id: string;
+  declare id: CreationOptional<string>;
   declare lawsuit_id: string;
   declare date: string;
 }
@@ -22,6 +23,7 @@ LawsuitEvent.init(
     id: {
       type: DataTypes.STRING,
       primaryKey: true,
+      autoIncrement: true
     },
     lawsuit_id: {
       type: DataTypes.STRING,

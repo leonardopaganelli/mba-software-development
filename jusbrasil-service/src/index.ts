@@ -5,9 +5,10 @@ import config from "@utils/config";
 import kafka  from "@clients/kafka";
 import { connect as databaseConnect } from "@clients/database";
 
-
 const port = 3001;
 const app = express();
+
+app.use(express.json());
 
 console.log("Initializing with config", config);
 
