@@ -24,7 +24,8 @@
       "@clients/*": ["./src/clients/*"],
       "@schemas/*": ["./src/schemas/*"],
       "@models/*": ["./src/database/models/*"],
-      "@services/*": ["./src/service/*"]
+      "@services/*": ["./src/service/*"],
+      "@validators/*": ["./src/validators/*"]
     }
   },
   "include": ["src/**/*"],

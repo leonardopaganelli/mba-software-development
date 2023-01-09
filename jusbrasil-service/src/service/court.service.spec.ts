@@ -13,7 +13,9 @@ describe('Court Service', () => {
 
         await findAllCourts();
 
-        expect(Court.findAll).toHaveBeenCalled();
+        expect(Court.findAll).toHaveBeenCalledWith({
+          plain: true,
+        });
     });
 
     it('return specific court', async () => {
@@ -24,6 +26,7 @@ describe('Court Service', () => {
 
         expect(Court.findOne).toHaveBeenCalledWith({
           where: { id: mockId },
+          raw: true,
         });
     })
 })

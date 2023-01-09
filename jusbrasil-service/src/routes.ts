@@ -1,8 +1,13 @@
 import { Express, Request, Response } from "express";
-import { ReadLawsuitByIdInput } from "@schemas/lawsuit";
 
 import { findAllCourts, findOneCourt } from "./service/court.service";
-import { findAllLawsuits, findOneLawsuit } from "./service/lawsuit.service";
+import {
+  findAllLawsuits,
+  findOneLawsuit,
+  addLawsuit,
+  removeLawsuit,
+  updateLawsuit,
+} from "./service/lawsuit.service";
 import { addDocument } from "./service/document.service";
 
 const routes = (app: Express) => {
@@ -10,6 +15,117 @@ const routes = (app: Express) => {
    * @openapi
    * components:
    *   schemas:
+   *     InputCreateLawsuit:
+   *       type: object
+   *       properties:
+   *         id:
+   *           type: string
+   *         nature:
+   *           type: string
+   *         judicialBranch:
+   *           type: string
+   *         initDate:
+   *           type: date
+   *         amountInControversy:
+   *           type: number
+   *         courtId:
+   *           type: number
+   *         involved:
+   *           type: object
+   *           properties:
+   *             perpetrator:
+   *               type: string
+   *             acused:
+   *               type: string
+   *             plaintifLawyerId:
+   *               type: string
+   *             defendantLawyerId:
+   *               type: string
+   *         subjects:
+   *           type: array
+   *           items:
+   *             type: string
+   *       example:
+   *         id: "502XXXX-21.2021.8.08.0025"
+   *         nature: "Procedimento do juizado especial cível"
+   *         judicialBranch: "Justiça dos Estados e do Distrito Federal e Territórios"
+   *         initDate: "2023-01-01"
+   *         amountInControversy: 5000
+   *         courtId: 1
+   *         involved: {
+   *           perpetrator: "Nova pessoa",
+   *           acused: "Novo banco",
+   *           plaintifLawyerId: "OAB 6739/ES",
+   *           defendantLawyerId: "OAB 7716/MG"
+   *         }
+   *         subjects: [
+   *           "1"
+   *         ]
+   *
+   *     InputUpdateLawsuit:
+   *       type: object
+   *       properties:
+   *         nature:
+   *           type: string
+   *         judicialBranch:
+   *           type: string
+   *         amountInControversy:
+   *           type: number
+   *       example:
+   *         nature: "Procedimento do juizado especial cível"
+   *         judicialBranch: "Justiça dos Estados e do Distrito Federal e Territórios"
+   *         amountInControversy: 5000
+   *     InputDocument:
+   *       type: object
+   *       properties:
+   *         lawsuitId:
+   *           type: string
+   *         date:
+   *           type: string
+   *         description:
+   *           type: string
+   *         status:
+   *           type: string
+   *       example:
+   *         lawsuitId: "502XXXX-21.2021.8.08.0024"
+   *         date: "2022-08-14"
+   *         description: "Expedição de Certidão"
+   *         status: "Em Andamento"
+   *     Document:
+   *       type: object
+   *       properties:
+   *         event_id:
+   *           type: number
+   *         label:
+   *           type: string
+   *         description:
+   *           type: string
+   *         created_at:
+   *           type: string
+   *       example:
+   *         event_id: 1
+   *         label: "Andamento"
+   *         description: 'Expedição de Certidão'
+   *         created_at: '2022-12-01'
+   *     Event:
+   *       type: object
+   *       properties:
+   *         date:
+   *           type: string
+   *         documents:
+   *           type: array
+   *           items:
+   *             $ref: '#/components/schemas/Document'
+   *     Subject:
+   *       type: object
+   *       properties:
+   *         id:
+   *           type: number
+   *         name:
+   *           type: string
+   *       example:
+   *         id: 1
+   *         name: 'Responsabilidade Civil'
    *     Court:
    *       type: object
    *       properties:
@@ -25,7 +141,7 @@ const routes = (app: Express) => {
    *           type: string
    *       example:
    *         id: 1
-   *         name: 'Tribunal de Justiça do Espírito Santo"'
+   *         name: 'Tribunal de Justiça do Espírito Santo'
    *         alias: 'TJES'
    *         city: 'Vitória'
    *         state: 'Espírito Santo'
@@ -42,17 +158,9 @@ const routes = (app: Express) => {
    *     Involved:
    *       type: object
    *       properties:
-   *         lawsuit_id:
-   *           type: string
    *         perpetrator:
    *           type: string
    *         acused:
-   *           type: string
-   *         plaintif_lawyer_id:
-   *           type: string
-   *         defendant_lawyer_id:
-   *           type: string
-   *         LawsuitId:
    *           type: string
    *         plaintifLawyer:
    *           $ref: '#/components/schemas/Lawyer'
@@ -71,8 +179,18 @@ const routes = (app: Express) => {
    *           type: string
    *         amountInControversy:
    *           type: string
-   *         court_id:
-   *           type: number
+   *         Court:
+   *           $ref: '#/components/schemas/Court'
+   *         Involved:
+   *           $ref: '#/components/schemas/Involved'
+   *         subjects:
+   *           type: array
+   *           items:
+   *             $ref: '#/components/schemas/Subject'
+   *         events:
+   *           type: array
+   *           items:
+   *             $ref: '#/components/schemas/Event'
    *     LawsuitAbridged:
    *       type: object
    *       properties:
@@ -86,7 +204,7 @@ const routes = (app: Express) => {
    *           type: string
    *         amountInControversy:
    *           type: string
-   *         court_id:
+   *         courtId:
    *           type: number
    *         Involved:
    *           type: object
@@ -98,7 +216,7 @@ const routes = (app: Express) => {
    *         judicialBranch: "Justiça dos Estados e do Distrito Federal e Territórios"
    *         initDate: "2021-10-29"
    *         amountInControversy: "3000"
-   *         court_id: 1
+   *         courtId: 1
    *         Involved: {
    *           acused: "Banco do Brasil"
    *         }
@@ -135,6 +253,8 @@ const routes = (app: Express) => {
    *           application/json:
    *             schema:
    *                 $ref: '#/components/schemas/Lawsuits'
+   *       500:
+   *         description: Error on get Lawsuits
    */
   app.get("/lawsuit", async (_: Request, res: Response) => {
     try {
@@ -148,11 +268,49 @@ const routes = (app: Express) => {
 
   /**
    * @openapi
-   * /lawsuit/:lawsuitId:
+   * /lawsuit:
+   *   post:
+   *     tags:
+   *      - Lawsuit
+   *     summary: Add new Lawsuit
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/schemas/InputCreateLawsuit'
+   *     responses:
+   *       201:
+   *         description: Lawsuit Added
+   *       500:
+   *         description: Error on add Lawsuit
+   */
+  app.post("/lawsuit", async (req, res) => {
+    try {
+      await addLawsuit(req.body);
+
+      res.status(201).send("Processo criado com sucesso");
+    } catch (e) {
+      console.error(e);
+      res.sendStatus(500);
+    }
+  });
+
+  /**
+   * @openapi
+   * /lawsuit/{lawsuitId}:
    *   get:
    *     tags:
    *      - Lawsuit
    *     summary: Responds lawsuit detailed
+   *     parameters:
+   *       - in: path
+   *         name: lawsuitId
+   *         schema:
+   *           type: string
+   *           example: "502XXXX-21.2021.8.08.0024"
+   *         required: true
+   *         description: Lawsuit Id
    *     responses:
    *       200:
    *         description: Lawsuit complete
@@ -160,50 +318,140 @@ const routes = (app: Express) => {
    *           application/json:
    *             schema:
    *                 $ref: '#/components/schemas/LawsuitComplete'
+   *       404:
+   *         description: Lawsuit not found
+   *       500:
+   *         description: Error on get Lawsuit
    */
-  app.get(
-    "/lawsuit/:lawsuitId",
-    async (req: Request<ReadLawsuitByIdInput["params"]>, res) => {
-      try {
-        const {
-          params: { lawsuitId },
-        } = req;
+  app.get("/lawsuit/:lawsuitId", async (req, res) => {
+    try {
+      const {
+        params: { lawsuitId },
+      } = req;
 
-        const lawsuit = await findOneLawsuit(lawsuitId);
+      const lawsuit = await findOneLawsuit(lawsuitId);
 
-        if (!lawsuit) {
-          res.sendStatus(404);
-        }
-
-        res.status(200).send(`${JSON.stringify(lawsuit, null, 2)}`);
-      } catch (e) {
-        console.error(e);
-        res.sendStatus(500);
-      }
+      lawsuit
+        ? res.status(200).send(`${JSON.stringify(lawsuit, null, 2)}`)
+        : res.sendStatus(404);
+    } catch (e) {
+      console.error(e);
+      res.sendStatus(500);
     }
-  );
+  });
 
-  app.post("/lawsuit", async (req, res) =>
-    res.status(500).send("Not implemented")
-  );
-  app.put("/lawsuit/:lawsuitId", async (req, res) =>
-    res.status(500).send("Not implemented")
-  );
-  app.delete("/lawsuit/:lawsuitId", async (req, res) =>
-    res.status(500).send("Not implemented")
-  );
+  /**
+   * @openapi
+   * /lawsuit/{lawsuitId}:
+   *   put:
+   *     tags:
+   *      - Lawsuit
+   *     summary: Update lawsuit
+   *     parameters:
+   *       - in: path
+   *         name: lawsuitId
+   *         schema:
+   *           type: string
+   *           example: "502XXXX-21.2021.8.08.0024"
+   *         required: true
+   *         description: Lawsuit Id
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/schemas/InputUpdateLawsuit'
+   *     responses:
+   *       200:
+   *         description: Lawsuit updated
+   *       404:
+   *         description: Lawsuit not found
+   *       500:
+   *         description: Error on update Lawsuit
+   */
+  app.put("/lawsuit/:lawsuitId", async (req, res) => {
+    try {
+      const {
+        params: { lawsuitId },
+      } = req;
 
+      await updateLawsuit(lawsuitId, req.body);
+      res.status(200).send("Processo atualizado com sucesso");
+    } catch (e) {
+      console.error(e);
+      res.sendStatus(500);
+    }
+  });
+
+  /**
+   * @openapi
+   * /lawsuit/{lawsuitId}:
+   *   delete:
+   *     tags:
+   *      - Lawsuit
+   *     summary: Delete Lawsuit
+   *     parameters:
+   *       - in: path
+   *         name: lawsuitId
+   *         schema:
+   *           type: string
+   *           example: "502XXXX-21.2021.8.08.0025"
+   *         required: true
+   *         description: Lawsuit Id
+   *     responses:
+   *       200:
+   *         description: Lawsuit deleted
+   *       500:
+   *         description: Error on delete Lawsuit
+   */
+  app.delete("/lawsuit/:lawsuitId", async (req, res) => {
+    try {
+      const {
+        params: { lawsuitId },
+      } = req;
+
+      await removeLawsuit(lawsuitId);
+
+      res.status(200).send("Processo deletado com sucesso");
+    } catch (e) {
+      console.error(e);
+      res.sendStatus(500);
+    }
+  });
+
+  /**
+   * @openapi
+   * /document:
+   *   post:
+   *     tags:
+   *      - Lawsuit
+   *     summary: Add new document to lawsuit timeline
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/schemas/InputDocument'
+   *     responses:
+   *       201:
+   *         description: Document Added
+   *       500:
+   *         description: Error on add document
+   */
   app.post("/document", async (req, res) => {
     try {
       await addDocument(req.body);
-      await req.producer.send({
-        topic: "lawsuit-update",
-        messages: [{ value: JSON.stringify(req.body) }],
-      });
+      if (req.producer) {
+        await req.producer.send({
+          topic: "lawsuit-update",
+          messages: [{ value: JSON.stringify(req.body) }],
+        });
+        console.log(
+          `Mensagem enviada com sucesso: ${JSON.stringify(req.body)}`
+        );
+      }
 
-      res
-        .status(200)
-        .send(`Mensagem enviada com sucesso: ${JSON.stringify(req.body)}`);
+      res.status(201).send("Documento criado com sucesso");
     } catch (e) {
       console.error(e);
       res.sendStatus(500);
@@ -226,6 +474,8 @@ const routes = (app: Express) => {
    *               type: array
    *               items:
    *                 $ref: '#/components/schemas/Court'
+   *       500:
+   *         description: Error on get courts
    */
   app.get("/court", async (_: Request, res: Response) => {
     try {
@@ -239,11 +489,19 @@ const routes = (app: Express) => {
 
   /**
    * @openapi
-   * /court/:courtId:
+   * /court/{courtId}:
    *   get:
    *     tags:
    *      - Lawsuit
    *     summary: Responds court on database
+   *     parameters:
+   *       - in: path
+   *         name: courtId
+   *         schema:
+   *           type: string
+   *           example: "1"
+   *         required: true
+   *         description: Court Id
    *     responses:
    *       200:
    *         description: Court
@@ -251,6 +509,10 @@ const routes = (app: Express) => {
    *           application/json:
    *             schema:
    *               $ref: '#/components/schemas/Court'
+   *       404:
+   *         description: Court not found
+   *       500:
+   *         description: Error on get court
    */
   app.get("/court/:id", async (req: Request, res: Response) => {
     try {
@@ -270,10 +532,6 @@ const routes = (app: Express) => {
       res.sendStatus(500);
     }
   });
-
-  // app.get("*", function (req, res) {
-  //   res.send(404);
-  // });
 }
 
 export default routes;

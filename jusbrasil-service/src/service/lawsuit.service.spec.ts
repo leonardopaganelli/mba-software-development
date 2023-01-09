@@ -4,18 +4,24 @@ import Court from "@models/court.model";
 import Lawyer from "@models/lawyer.model";
 import Subject from "@models/subject.model";
 import EventDocument from "@models/event_document.model";
+import { database } from "@clients/database";
 
-import { findAllLawsuits, findOneLawsuit } from "@services/lawsuit.service";
+import { addLawsuit, findAllLawsuits, findOneLawsuit, removeLawsuit, updateLawsuit } from "@services/lawsuit.service";
 import LawsuitSubject from "@models/lawsuit_subject.model";
 import LawsuitEvent from "@models/lawsuit_event.model";
+import validateLawsuitInput from "@validators/validateLawsuitInput";
 
 jest.mock("../database/models/lawsuit.model", () => ({
   init: jest.fn(),
   findOne: jest.fn(),
   findAll: jest.fn(),
+  destroy: jest.fn(),
+  update: jest.fn(),
+  create: jest.fn()
 }));
 jest.mock("../database/models/involved.model", () => ({
   init: jest.fn(),
+  create: jest.fn(),
 }));
 jest.mock("../database/models/court.model", () => ({
   init: jest.fn(),
@@ -31,8 +37,25 @@ jest.mock("../database/models/lawsuit_subject.model", () => ({
 jest.mock("../database/models/lawsuit_event.model", () => ({
   init: jest.fn(),
   belongsTo: jest.fn(),
-  findAll: jest.fn()
+  findAll: jest.fn(),
+  create: jest.fn(),
 }));
+
+jest.mock("../database/models/lawyer.model", () => ({
+  init: jest.fn(),
+}));
+jest.mock("../database/models/event_document.model", () => ({
+  init: jest.fn(),
+}));
+jest.mock("../validators/validateLawsuitInput", () => ({
+  validateLawsuit: jest.fn()
+}))
+
+jest.mock("../clients/database", () => ({
+  database: {
+    transaction: jest.fn((callback) => callback)
+  }
+}))
 
 describe("Lawsuit Service", () => {
   it("return all lawusuits", async () => {
@@ -40,23 +63,27 @@ describe("Lawsuit Service", () => {
 
     await findAllLawsuits();
     expect(Lawsuit.findAll).toHaveBeenCalledWith({
+      attributes: {
+        exclude: ["court_id"],
+      },
       include: [
         {
           model: Involved,
           attributes: ["acused"],
         },
       ],
-      raw: true
+      raw: true,
     });
   });
 
   it("return specific lawsuit", async () => {
-    jest.spyOn(Lawsuit, "findOne").mockResolvedValueOnce(null);
-    jest.spyOn(LawsuitSubject, "findAll").mockResolvedValueOnce([]);
-    jest.spyOn(LawsuitEvent, "findAll").mockResolvedValueOnce([
+    const lawsuitMock = {};
+    const subjectMock = [{ Subject: {} }];
+    const eventMock = [
       {
         date: "12-12-2022",
-        document: {
+        EventDocuments: {
+          event_id: "1",
           label: "label",
           description: "description",
           created_at: "12-12-2022",
@@ -64,19 +91,26 @@ describe("Lawsuit Service", () => {
       },
       {
         date: "12-12-2022",
-        document: {
+        EventDocuments: {
+          event_id: "1",
           label: "label 2",
           description: "description 2",
           created_at: "12-12-2022",
         },
       },
-    ] as any[]);
+    ]
+    jest.spyOn(Lawsuit, "findOne").mockResolvedValueOnce(lawsuitMock as any);
+    jest.spyOn(LawsuitSubject, "findAll").mockResolvedValueOnce(subjectMock as any[]);
+    jest.spyOn(LawsuitEvent, "findAll").mockResolvedValueOnce(eventMock as any[]);
 
     const mockId = "1";
 
     const lawsuitSubjectParameters = {
       where: {
         lawsuit_id: mockId,
+      },
+      attributes: {
+        exclude: ["courtId"],
       },
       include: [
         {
@@ -101,12 +135,16 @@ describe("Lawsuit Service", () => {
     };
     const lawsuitParameters = {
       where: { id: mockId },
+      attributes: {
+        exclude: ["courtId", "court_id"],
+      },
       include: [
         {
           model: Court,
         },
         {
           model: Involved,
+          attributes: ["perpetrator", "acused"],
           include: [
             {
               model: Lawyer,
@@ -130,5 +168,68 @@ describe("Lawsuit Service", () => {
     );
     expect(LawsuitEvent.findAll).toHaveBeenCalledWith(lawsuitEventParameters);
     expect(Lawsuit.findOne).toHaveBeenCalledWith(lawsuitParameters);
+  });
+
+  it("create lawsuit", async () => {
+    const addMock = {
+      id: "502XXXX-21.2021.8.08.0025",
+      nature: "Procedimento do juizado especial cível",
+      judicialBranch: "Justiça dos Estados e do Distrito Federal e Territórios",
+      initDate: new Date("2023-01-01"),
+      amountInControversy: 5000,
+      courtId: 1,
+      involved: {
+        perpetrator: "Nova pessoa",
+        acused: "Novo banco",
+        plaintifLawyerId: "OAB 6739/ES",
+        defendantLawyerId: "OAB 7716/MG"
+      },
+      subjects: [
+        "1"
+      ]
+    };
+
+    await addLawsuit(addMock);
+
+    expect(validateLawsuitInput.validateLawsuit).toHaveBeenCalled();
+    expect(database.transaction).toHaveBeenCalled();
+  })
+
+  it("update lawsuit", async () => {
+    const lawsuitId = "1";
+    const updateMock = {
+      amountInControversy: 10,
+      judicialBranch: "",
+      nature:""
+    }
+    jest.spyOn(Lawsuit, "update").mockResolvedValueOnce({} as any);
+
+    await updateLawsuit(lawsuitId, updateMock);
+
+    expect(Lawsuit.update).toHaveBeenCalledWith(
+      updateMock,
+      {
+        where: {
+          id: lawsuitId,
+        },
+      }
+    );
+  });
+
+  it("remove lawsuit", async()=> {
+    const lawsuitMock = {
+      destroy: jest.fn()
+    }
+    const lawsuitId = "1";
+    jest.spyOn(Lawsuit, "findOne").mockResolvedValueOnce(lawsuitMock as any);
+
+    await removeLawsuit(lawsuitId);
+
+    expect(Lawsuit.findOne).toHaveBeenCalledWith({
+      where: {
+        id: lawsuitId,
+      },
+    });
+    expect(lawsuitMock.destroy).toHaveBeenCalled();
   });
 });

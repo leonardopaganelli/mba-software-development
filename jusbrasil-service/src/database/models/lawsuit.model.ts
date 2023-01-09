@@ -18,6 +18,7 @@ export class Lawsuit extends Model<
   declare judicialBranch: string;
   declare initDate: Date;
   declare amountInControversy: number;
+  declare courtId: number;
 }
 
 Lawsuit.init(
@@ -41,6 +42,10 @@ Lawsuit.init(
     amountInControversy:{
         type: DataTypes.DOUBLE,
         allowNull: false
+    },
+    courtId:{
+        type: DataTypes.DOUBLE,
+        allowNull: false
     }
   },
   {
@@ -54,11 +59,15 @@ Lawsuit.belongsTo(Court, {
 })
 
 Lawsuit.hasOne(Involved, {
-  sourceKey: 'id'
-})
+  sourceKey: "id",
+  onDelete: "cascade",
+  hooks: true,
+});
 
 Lawsuit.hasMany(LawsuitSubject, {
-  sourceKey: "id"
+  sourceKey: "id",
+  onDelete: "cascade",
+  hooks: true,
 });
 
 export default Lawsuit;
