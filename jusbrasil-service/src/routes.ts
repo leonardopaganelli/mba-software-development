@@ -532,6 +532,6 @@ const routes = (app: Express) => {
       res.sendStatus(500);
     }
   });
-}
+};
 
 export default routes;

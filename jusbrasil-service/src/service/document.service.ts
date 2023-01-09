@@ -28,5 +28,4 @@ async function addDocument(document: {
   });
 }
 
-
 export { addDocument };

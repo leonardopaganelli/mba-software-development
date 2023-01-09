@@ -29,5 +29,5 @@ async function connect() {
 export {
   database,
   connect
-}
+};
 

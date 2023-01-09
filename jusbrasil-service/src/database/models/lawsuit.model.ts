@@ -24,28 +24,28 @@ export class Lawsuit extends Model<
 Lawsuit.init(
   {
     id: {
-        type: DataTypes.STRING,
-        primaryKey: true,
+      type: DataTypes.STRING,
+      primaryKey: true,
     },
     nature: {
-        type: DataTypes.TEXT,
-        allowNull: false
+      type: DataTypes.TEXT,
+      allowNull: false
     },
     judicialBranch: {
-        type: DataTypes.TEXT,
-        allowNull: false
+      type: DataTypes.TEXT,
+      allowNull: false
     },
     initDate: {
-        type: DataTypes.DATE,
-        allowNull: false
+      type: DataTypes.DATE,
+      allowNull: false
     },
     amountInControversy:{
-        type: DataTypes.DOUBLE,
-        allowNull: false
+      type: DataTypes.DOUBLE,
+      allowNull: false
     },
     courtId:{
-        type: DataTypes.DOUBLE,
-        allowNull: false
+      type: DataTypes.DOUBLE,
+      allowNull: false
     }
   },
   {
@@ -56,7 +56,7 @@ Lawsuit.init(
 
 Lawsuit.belongsTo(Court, {
   foreignKey: "court_id",
-})
+});
 
 Lawsuit.hasOne(Involved, {
   sourceKey: "id",

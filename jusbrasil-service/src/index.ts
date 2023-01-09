@@ -12,7 +12,6 @@ const app = express();
 
 app.use(express.json());
 
-
 async function run() {
   await kafka(app);
   await databaseConnect();

@@ -49,13 +49,13 @@ jest.mock("../database/models/event_document.model", () => ({
 }));
 jest.mock("../validators/validateLawsuitInput", () => ({
   validateLawsuit: jest.fn()
-}))
+}));
 
 jest.mock("../clients/database", () => ({
   database: {
     transaction: jest.fn((callback) => callback)
   }
-}))
+}));
 
 describe("Lawsuit Service", () => {
   it("return all lawusuits", async () => {
@@ -98,7 +98,7 @@ describe("Lawsuit Service", () => {
           created_at: "12-12-2022",
         },
       },
-    ]
+    ];
     jest.spyOn(Lawsuit, "findOne").mockResolvedValueOnce(lawsuitMock as any);
     jest.spyOn(LawsuitSubject, "findAll").mockResolvedValueOnce(subjectMock as any[]);
     jest.spyOn(LawsuitEvent, "findAll").mockResolvedValueOnce(eventMock as any[]);
@@ -193,7 +193,7 @@ describe("Lawsuit Service", () => {
 
     expect(validateLawsuitInput.validateLawsuit).toHaveBeenCalled();
     expect(database.transaction).toHaveBeenCalled();
-  })
+  });
 
   it("update lawsuit", async () => {
     const lawsuitId = "1";
@@ -201,7 +201,7 @@ describe("Lawsuit Service", () => {
       amountInControversy: 10,
       judicialBranch: "",
       nature:""
-    }
+    };
     jest.spyOn(Lawsuit, "update").mockResolvedValueOnce({} as any);
 
     await updateLawsuit(lawsuitId, updateMock);
@@ -219,7 +219,7 @@ describe("Lawsuit Service", () => {
   it("remove lawsuit", async()=> {
     const lawsuitMock = {
       destroy: jest.fn()
-    }
+    };
     const lawsuitId = "1";
     jest.spyOn(Lawsuit, "findOne").mockResolvedValueOnce(lawsuitMock as any);
 

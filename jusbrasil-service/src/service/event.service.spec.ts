@@ -10,18 +10,18 @@ jest.mock("../database/models/lawsuit_event.model", () => ({
 describe("Event Service", () => {
   it("Create Event", async () => {
     const mock = {
-        lawsuitId: '1',
-        date: '10/10/2022'
-    }
+      lawsuitId: "1",
+      date: "10/10/2022"
+    };
     jest.spyOn(Event, "create").mockResolvedValueOnce({
-        get: jest.fn(() => ({ id: 1 }))
+      get: jest.fn(() => ({ id: 1 }))
     });
 
     await EventService.createEvent(mock);
 
     expect(Event.create).toHaveBeenCalledWith({
-        lawsuit_id: mock.lawsuitId,
-        date: mock.date
+      lawsuit_id: mock.lawsuitId,
+      date: mock.date
     });
   });
 
@@ -34,11 +34,11 @@ describe("Event Service", () => {
     await EventService.retrieveEventId(mock);
 
     expect(Event.findOne).toHaveBeenCalledWith({
-        where: {
-            lawsuit_id: mock.lawsuitId,
-            date: mock.date,
-        },
-        raw: true
+      where: {
+        lawsuit_id: mock.lawsuitId,
+        date: mock.date,
+      },
+      raw: true
     });
   });
 });

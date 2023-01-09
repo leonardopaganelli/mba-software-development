@@ -44,7 +44,7 @@ LawsuitEvent.belongsTo(Lawsuit);
 
 LawsuitEvent.hasMany(EventDocument, {
   sourceKey: "id",
-  foreignKey: 'event_id'
+  foreignKey: "event_id"
 });
 
 export default LawsuitEvent;

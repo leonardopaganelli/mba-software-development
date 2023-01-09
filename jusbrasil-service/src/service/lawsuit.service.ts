@@ -42,7 +42,7 @@ async function findAllLawsuits() {
   return (
     await Lawsuit.findAll({
       attributes: {
-        exclude: ['court_id']
+        exclude: ["court_id"]
       },
       include: [
         {
@@ -52,7 +52,7 @@ async function findAllLawsuits() {
       ],
       raw: true
     })
-  )
+  );
 }
 
 async function findOneLawsuit(id: string) {
@@ -172,7 +172,7 @@ async function addLawsuit(lawsuitToInsert: lawsuitCreateInput) {
       },
       subjects
     } = lawsuitToInsert;
-    console.log("creatomg lawsuit")
+    console.log("creatomg lawsuit");
     await Lawsuit.create({
       id,
       nature,
@@ -188,7 +188,7 @@ async function addLawsuit(lawsuitToInsert: lawsuitCreateInput) {
       acused,
       plaintif_lawyer_id: plaintifLawyerId,
       defendant_lawyer_id: defendantLawyerId
-    }, {transaction})
+    }, {transaction});
 
     for await (const subject of subjects) {
       await LawsuitSubject.create({
@@ -205,7 +205,7 @@ async function removeLawsuit(lawsuitId: string) {
       id: lawsuitId
     }
   });
-  await lawsuit?.destroy()
+  await lawsuit?.destroy();
 }
 
 async function updateLawsuit(
@@ -223,7 +223,7 @@ async function updateLawsuit(
     where: {
       id: lawsuitId
     }
-  })
+  });
 }
 
 export {
