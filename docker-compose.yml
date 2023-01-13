@@ -68,9 +68,17 @@ services:
     container_name: lawsuit-service
     restart: unless-stopped
     build:
-      context: lawswuit-service
+      context: lawsuit-service
     ports:
       - "3000:3000"
     depends_on:
       - zookeeper
       - kafka
+
+  lawsuit-client:
+    container_name: lawsuit-client
+    build:
+          context: lawsuit-client
+    ports:
+      - "8080:8080"
+    stdin_open: true
