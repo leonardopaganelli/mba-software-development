@@ -44,7 +44,7 @@ Lawsuit.init(
       allowNull: false
     },
     courtId:{
-      type: DataTypes.DOUBLE,
+      type: DataTypes.INTEGER,
       allowNull: false
     }
   },

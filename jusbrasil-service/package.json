@@ -11,7 +11,17 @@
     "start": "npm run build && NODE_ENV=production node dist/index.js",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "migration": "NODE_ENV=production npx sequelize-cli@6.3.0 db:migrate",
+    "migration:local": "npx sequelize-cli@6.3.0 db:migrate",
+    "migration:add": "npx sequelize-cli@6.3.0 migration:generate --name",
+    "migration:rollback": "NODE_ENV=production equelize-cli@6.3.0 db:migrate:undo",
+    "migration:rollback:local": "npx sequelize-cli@6.3.0 db:migrate:undo",
+    "seed:add": "npx sequelize-cli@6.3.0 seed:generate --name",
+    "seed": "NODE_ENV=production npx sequelize-cli@6.3.0 db:seed:all",
+    "seed:local": "npx sequelize-cli@6.3.0 db:seed:all",
+    "seed:rollback": "NODE_ENV=production npx sequelize-cli@6.3.0 db:seed:undo",
+    "seed:rollback:local": "npx sequelize-cli@6.3.0 db:seed:undo"
   },
   "keywords": [],
   "author": "",

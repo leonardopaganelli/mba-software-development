@@ -13,5 +13,13 @@
     "quotes": "error",
     "semi": "error",
     "no-multiple-empty-lines": ["error", { "max": 1 }]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*-create-table-*", "*-seed-table-*"],
+      "rules": {
+        "no-undef": 0
+      }
+    }
+  ]
 }

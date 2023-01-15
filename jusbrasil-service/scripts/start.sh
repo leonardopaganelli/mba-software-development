@@ -9,7 +9,8 @@ fail() {
 
 startService() {
   echo "Starting jusbrasil service..."
-#   yarn migration:run
+  yarn migration
+  yarn seed
   NODE_ENV=production node dist/index.js
 }
 

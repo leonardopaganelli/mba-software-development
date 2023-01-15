@@ -23,7 +23,7 @@
       "@customTypes/*": ["./src/types/*"],
       "@clients/*": ["./src/clients/*"],
       "@schemas/*": ["./src/schemas/*"],
-      "@models/*": ["./src/database/models/*"],
+      "@models/*": ["src/models/*"],
       "@services/*": ["./src/service/*"],
       "@validators/*": ["./src/validators/*"]
     }
