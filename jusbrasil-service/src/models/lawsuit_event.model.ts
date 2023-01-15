@@ -21,7 +21,7 @@ export class LawsuitEvent extends Model<
 LawsuitEvent.init(
   {
     id: {
-      type: DataTypes.STRING,
+      type: DataTypes.NUMBER,
       primaryKey: true,
       autoIncrement: true
     },

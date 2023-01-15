@@ -28,7 +28,7 @@ function LawsuitCard({ customStyle, lawsuitId, accused }: LawsuitCardProps) {
       }}
       onClick={(e) => {
         console.log(e);
-        navigate("/detail");
+        navigate(`/detail/${lawsuitId}`);
       }}
     >
       <Person style={{ color: "#f08a8e" }} />

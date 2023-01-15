@@ -2,7 +2,6 @@ import "../App.scss";
 
 import {
   Typography,
-  Card,
   GridList,
   GridListTile,
 } from "@material-ui/core";
@@ -18,7 +17,7 @@ interface LawsuitGridProps {
 }
 
 interface Lawsuit {
-  "Involved.acused": string;
+"Involved.acused": string;
   amountInControversy: string;
   courtId: number;
   id: string;

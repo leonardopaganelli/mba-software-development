@@ -6,7 +6,6 @@ module.exports = {
       "court",
       [
         {
-          id: 1,
           name: "Tribunal de Justiça do Espírito Santo",
           alias: "TJES",
           city: "Vitória",
