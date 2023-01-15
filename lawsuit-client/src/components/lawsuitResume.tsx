@@ -19,6 +19,7 @@ function LawsuitResume({ customStyle, involved, amountInControversy, nature, cou
       style={{
         backgroundColor: "white",
         borderRadius: "14px 14px 0 0",
+        padding: "15px 0",
         ...customStyle,
       }}
     >
@@ -26,27 +27,34 @@ function LawsuitResume({ customStyle, involved, amountInControversy, nature, cou
         <Typography
           style={{
             fontWeight: "bold",
+            fontSize: "18px",
           }}
         >
           {`${involved.perpetrator} X ${involved.acused}`}
         </Typography>
-        <Box style={{ display: "flex" }}>
-          <AccountBalanceRounded
-            style={{ height: "20px", cursor: "pointer" }}
-          />
+        <Box
+          style={{ display: "flex", alignItems: "center", marginTop: "15px" }}
+        >
+          <AccountBalanceRounded style={{ height: "16px" }} />
           <Typography>
             {`${court.alias} - ${court.city}, ${court.state}`}
           </Typography>
         </Box>
-        <Box style={{ display: "flex" }}>
-          <GavelRounded style={{ height: "20px", cursor: "pointer" }} />
+        <Box
+          style={{ display: "flex", alignItems: "center", marginTop: "15px" }}
+        >
+          <GavelRounded style={{ height: "16px" }} />
           <Typography>{nature}</Typography>
         </Box>
-        <Box style={{ display: "flex" }}>
-          <MonetizationOnOutlined
-            style={{ height: "20px", cursor: "pointer" }}
-          />
-          <Typography>{`Valor da causa: R$${amountInControversy}`}</Typography>
+        <Box
+          style={{ display: "flex", alignItems: "center", marginTop: "15px" }}
+        >
+          <MonetizationOnOutlined style={{ height: "16px" }} />
+          <Typography>{`Valor da causa: R$${Number(
+            amountInControversy
+          ).toLocaleString("pt-BR", {
+            minimumFractionDigits: 2,
+          })}`}</Typography>
         </Box>
       </Container>
     </Box>

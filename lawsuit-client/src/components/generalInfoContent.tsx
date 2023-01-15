@@ -25,56 +25,60 @@ function GeneralInfoContent({
   judicialBranch,
 }: GeneralInfoContentProps) {
   return (
-    <Box>
-      <Typography
-        style={{
-          fontWeight: "bold",
-        }}
-      >
-        {`O processo teve origem no ${court.name}`}
+    <Box style={{ paddingTop: 15 }}>
+      <Typography>
+        {`O processo teve origem no ${court.name}, em ${new Date(
+          initDate
+        ).toLocaleDateString()}`}
       </Typography>
-      <Box style={{ display: "flex" }}>
-        <AccountBalanceRounded style={{ height: "20px", cursor: "pointer" }} />
-        <Box>
-          <Typography>Tribunal de Origem</Typography>
-          <Typography>
-            {`${court.alias} - ${court.city}, ${court.state}`}
+      <Box style={{ display: "flex", marginTop: 20 }}>
+        <AccountBalanceRounded style={{ height: "24px", cursor: "pointer" }} />
+        <Box style={{ marginLeft: 10 }}>
+          <Typography style={{ fontSize: 18 }}>Tribunal de Origem</Typography>
+          <Typography style={{ marginTop: 6 }}>
+            {`${court.alias} · ${court.city}, ${court.state}`}
           </Typography>
         </Box>
       </Box>
-      <Box style={{ display: "flex" }}>
-        <GavelRounded style={{ height: "20px", cursor: "pointer" }} />
-        <Box>
-          <Typography>Assunto</Typography>
-          <Typography>{subjects.map(({name})=>name).join(" / ")}</Typography>
+      <Box style={{ display: "flex", marginTop: 20 }}>
+        <GavelRounded style={{ height: "24px", cursor: "pointer" }} />
+        <Box style={{ marginLeft: 10 }}>
+          <Typography style={{ fontSize: 18 }}>Assunto</Typography>
+          <Typography style={{ marginTop: 6 }}>
+            {subjects.map(({ name }) => name).join(" / ")}
+          </Typography>
         </Box>
       </Box>
-      <Box style={{ display: "flex" }}>
-        <EventRounded style={{ height: "20px", cursor: "pointer" }} />
-        <Box>
-          <Typography>Início do Processo</Typography>
-          <Typography>{initDate.toString()}</Typography>
+      <Box style={{ display: "flex", marginTop: 20 }}>
+        <EventRounded style={{ height: "24px", cursor: "pointer" }} />
+        <Box style={{ marginLeft: 10 }}>
+          <Typography style={{ fontSize: 18 }}>Início do Processo</Typography>
+          <Typography style={{ marginTop: 6 }}>
+            {new Date(initDate).toLocaleDateString()}
+          </Typography>
         </Box>
       </Box>
-      <Box style={{ display: "flex" }}>
-        <MonetizationOn style={{ height: "20px", cursor: "pointer" }} />
-        <Box>
-          <Typography>Valor da Causa</Typography>
-          <Typography>{`R$${amountInControversy}`}</Typography>
+      <Box style={{ display: "flex", marginTop: 20 }}>
+        <MonetizationOn style={{ height: "24px", cursor: "pointer" }} />
+        <Box style={{ marginLeft: 10 }}>
+          <Typography style={{ fontSize: 18 }}>Valor da Causa</Typography>
+          <Typography style={{ marginTop: 6 }}>
+            {`R$${Number(amountInControversy).toLocaleString("pt-BR", {minimumFractionDigits: 2,})}`}
+          </Typography>
         </Box>
       </Box>
-      <Box style={{ display: "flex" }}>
-        <InfoOutlined style={{ height: "20px", cursor: "pointer" }} />
-        <Box>
-          <Typography>Natureza</Typography>
-          <Typography>{nature}</Typography>
+      <Box style={{ display: "flex", marginTop: 20 }}>
+        <InfoOutlined style={{ height: "24px", cursor: "pointer" }} />
+        <Box style={{ marginLeft: 10 }}>
+          <Typography style={{ fontSize: 18 }}>Natureza</Typography>
+          <Typography style={{ marginTop: 6 }}>{nature}</Typography>
         </Box>
       </Box>
-      <Box style={{ display: "flex" }}>
-        <DomainRounded style={{ height: "20px", cursor: "pointer" }} />
-        <Box>
-          <Typography>Poder Judiciário</Typography>
-          <Typography>{judicialBranch}</Typography>
+      <Box style={{ display: "flex", marginTop: 20 }}>
+        <DomainRounded style={{ height: "24px", cursor: "pointer" }} />
+        <Box style={{ marginLeft: 10 }}>
+          <Typography style={{ fontSize: 18 }}>Poder Judiciário</Typography>
+          <Typography style={{ marginTop: 6 }}>{judicialBranch}</Typography>
         </Box>
       </Box>
     </Box>

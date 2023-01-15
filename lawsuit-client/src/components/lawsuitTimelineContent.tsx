@@ -52,19 +52,31 @@ function OrderItem({ item, isLast }: {item: Event, isLast: boolean}) {
   return (
     <TimelineItem className="adjust-timeline">
       <TimelineSeparator>
-        <TimelineDot />
-        {isLast ? null : <TimelineConnector />}
+        <TimelineDot style={{ backgroundColor: "#C0D3F8" }} />
+        {isLast ? null : (
+          <TimelineConnector style={{ backgroundColor: "#C0D3F8" }} />
+        )}
       </TimelineSeparator>
 
       <TimelineContent>
-        <Typography variant="subtitle2">{date}</Typography>
+        <Typography variant="subtitle2">
+          {new Date(date).toLocaleDateString()}
+        </Typography>
         {documents.map(({ created_at, label, description }) => (
           <Card
             key={created_at}
-            style={{ display: "flex", flexDirection: "column", marginBottom: "20px" }}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              marginBottom: "20px",
+              backgroundColor: "#EDF4FE",
+              padding: 10,
+            }}
           >
-            <Typography variant="caption">{label}</Typography>
-            <Typography variant="caption">
+            <Typography variant="caption" style={{ fontWeight: "bold" }}>
+              {label}
+            </Typography>
+            <Typography variant="caption" style={{ color: colors.grey[600] }}>
               {description}
             </Typography>
           </Card>

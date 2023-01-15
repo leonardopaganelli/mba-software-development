@@ -1,6 +1,6 @@
 import "../App.scss";
 
-import { Box, Typography } from "@material-ui/core";
+import { Box, colors, Typography } from "@material-ui/core";
 
 import React from "react";
 import { Involved } from "../types/types";
@@ -14,88 +14,85 @@ function InvolvedContent({ customStyle, involved }: InvolvedContentProps) {
     <Box
       style={{
         ...customStyle,
+        padding: "15px 0",
       }}
     >
       <Box>
         <Typography
           style={{
             fontWeight: "bold",
+            color: colors.grey[500],
           }}
         >
           POLO ATIVO
         </Typography>
-        <Box style={{ display: "flex", justifyContent: "space-between" }}>
+        <Box
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginTop: 10,
+          }}
+        >
           <Box>
             <Typography
               style={{
-                fontWeight: "bold",
+                color: "#2196F3",
               }}
             >
               {involved.perpetrator}
             </Typography>
-            <Typography
-              style={{
-                fontWeight: "bold",
-              }}
-            >
-              Autor
-            </Typography>
+            <Typography>Autor</Typography>
           </Box>
           <Box>
             <Typography
               style={{
-                fontWeight: "bold",
+                color: "#2196F3",
               }}
             >
               {involved.plaintifLawyer.name}
             </Typography>
             <Typography
-              style={{
-                fontWeight: "bold",
-              }}
             >
               {`Advogado envoldido - ${involved.plaintifLawyer.id}`}
             </Typography>
           </Box>
         </Box>
       </Box>
-      <Box>
+      <Box style={{ marginTop: "30px" }}>
         <Typography
           style={{
             fontWeight: "bold",
+            color: colors.grey[500],
           }}
         >
           POLO PASSIVO
         </Typography>
-        <Box style={{ display: "flex", justifyContent: "space-between" }}>
-          <Box >
+        <Box
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginTop: 10,
+          }}
+        >
+          <Box>
             <Typography
               style={{
-                fontWeight: "bold",
+                color: "#2196F3",
               }}
             >
               {involved.acused}
             </Typography>
-            <Typography
-              style={{
-                fontWeight: "bold",
-              }}
-            >
-              Réu
-            </Typography>
+            <Typography>Réu</Typography>
           </Box>
           <Box>
             <Typography
               style={{
-                fontWeight: "bold",
+                color: "#2196F3",
               }}
             >
               {involved.defendantLawyer.name}
             </Typography>
             <Typography
-              style={{
-                fontWeight: "bold",
-              }}
             >
               {`Advogado envoldido - ${involved.defendantLawyer.id}`}
             </Typography>

@@ -63,7 +63,7 @@ function Detail() {
         height: "calc(100vh - 2px)",
         border: "solid 1px black",
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
       }}
     >
       <DetailHeader
@@ -75,25 +75,45 @@ function Detail() {
         court={lawsuit.Court}
         involved={lawsuit.Involved}
         nature={lawsuit.nature}
+        customStyle={{
+          marginTop: "16px",
+        }}
       />
       <Tabs
         value={currentTab}
         onChange={handleChange}
         aria-label="wrapped label tabs example"
         style={{
-          backgroundColor: "blue",
+          backgroundColor: "#2196f3",
+          color: "white",
+        }}
+        variant="fullWidth"
+      >
+        <Tab
+          value="timeLine"
+          label="Linha do tempo"
+          style={{ textTransform: "none" }}
+        />
+        <Tab
+          value="generalInfo"
+          label="Informações gerais"
+          style={{ textTransform: "none" }}
+        />
+        <Tab
+          value="involved"
+          label="Envolvidos"
+          style={{ textTransform: "none" }}
+        />
+      </Tabs>
+      <Container
+        maxWidth={"sm"}
+        style={{
+          height: "100%",
+          backgroundColor: "white",
+          flexGrow: 1,
+          overflowY: "scroll",
         }}
       >
-        <Tab value="timeLine" label="Linha do tempo" />
-        <Tab value="generalInfo" label="Informações gerais" />
-        <Tab value="involved" label="Envolvidos" />
-      </Tabs>
-      <Container maxWidth={"sm"} style={{
-        height: "100%",
-        backgroundColor: "white",
-        flexGrow: 1,
-        overflowY: "scroll"
-      }}>
         {lawsuitTabs[currentTab as lawsuitTabsKeys]}
       </Container>
     </Box>

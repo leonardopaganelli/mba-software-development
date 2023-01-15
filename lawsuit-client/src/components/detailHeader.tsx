@@ -16,15 +16,16 @@ function DetailHeader({ customStyle, accused, lawsuitId }: DetailHeaderProps) {
 
   return (
     <Container
+      maxWidth={"sm"}
       style={{
         color: "white",
         display: "flex",
-        padding: "15px",
+        marginTop: "20px",
         ...customStyle,
       }}
     >
       <ChevronLeft
-        style={{ height: "20px", cursor: "pointer" }}
+        style={{ height: "26px", cursor: "pointer" }}
         onClick={() => navigate("/")}
       />
       <Box style={{ marginLeft: "20px" }}>
@@ -32,14 +33,15 @@ function DetailHeader({ customStyle, accused, lawsuitId }: DetailHeaderProps) {
           style={{
             color: "white",
             fontWeight: "bold",
+            fontSize: "20px",
           }}
         >
           {accused}
         </Typography>
         <Typography
           style={{
-            fontSize: 11,
             color: colors.grey[700],
+            marginTop: "5px",
           }}
         >
           {`Processo nº ${lawsuitId}`}

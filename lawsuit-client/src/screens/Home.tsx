@@ -51,7 +51,11 @@ function Home() {
       <BottomNavigation showLabels style={{
             boxShadow: "0px 2px 16px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)",
             borderRadius: "14px 14px 0 0",
-            justifyContent: "space-around"
+            justifyContent: "space-around",
+            position: "absolute",
+            width: "100%",
+            left: 0,
+            bottom: 0
         }} >
         <BottomNavigationAction icon={<HomeRounded />} />
         <BottomNavigationAction icon={<PersonRounded />} />
