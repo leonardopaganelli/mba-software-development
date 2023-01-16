@@ -1,5 +1,6 @@
 import { Kafka } from "kafkajs";
 import config from "@utils/config";
+import { io } from "@clients/socket";
 
 const { KAFKA_HOST, KAFKA_PORT } = config;
 
@@ -18,7 +19,8 @@ async function kafka() {
   consumer.subscribe({ topic });
   consumer.run({
     eachMessage: async({ topic, partition, message}) =>{
-      console.log("NEW MESSAGE: ",{topic, partition, message});
+      console.log("NEW MESSAGE: ",{topic, partition, message: message.value?.toString()});
+      io.emit(topic, message.value?.toString());
     }
   })
 }

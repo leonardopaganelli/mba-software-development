@@ -1,8 +1,8 @@
 import "../App.scss";
 
-import { Avatar, Box, Typography, Card, colors, Container } from "@material-ui/core";
+import { Box, Typography, colors, Container } from "@material-ui/core";
 
-import { Star, ArrowForward, ChevronLeft } from "@material-ui/icons";
+import { ChevronLeft } from "@material-ui/icons";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 

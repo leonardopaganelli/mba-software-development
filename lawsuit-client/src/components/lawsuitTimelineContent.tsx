@@ -1,12 +1,9 @@
 import "../styles/adjustTimeline.scss";
 
 import {
-  Avatar,
-  Box,
   Typography,
   Card,
   colors,
-  Container,
 } from "@material-ui/core";
 
 import {
@@ -19,14 +16,18 @@ import {
 } from "@material-ui/lab";
 
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Court, Involved, Subject, Event } from "../types/types";
+import { Event } from "../types/types";
 
 interface LawsuitTimelineContentProps {
   customStyle?: React.CSSProperties;
   events: Event[];
 }
 function LawsuitTimelineContent({ customStyle, events }: LawsuitTimelineContentProps) {
+  if (events.length === 0) return (
+    <Typography>
+      Não há eventos cadastrados para este processo
+    </Typography>
+  );
   return (
     <Timeline
       style={{

@@ -1,10 +1,10 @@
 import "../App.scss";
 
-import { Box, Typography, Container } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 
-import { MonetizationOnOutlined, AccountBalanceRounded, GavelRounded, EventRounded, MonetizationOn, InfoOutlined, DomainRounded, } from "@material-ui/icons";
+import { AccountBalanceRounded, GavelRounded, EventRounded, MonetizationOn, InfoOutlined, DomainRounded, } from "@material-ui/icons";
 import React from "react";
-import { Court, Involved, Subject } from "../types/types";
+import { Court, Subject } from "../types/types";
 
 interface GeneralInfoContentProps {
   customStyle?: React.CSSProperties;
@@ -16,7 +16,6 @@ interface GeneralInfoContentProps {
   judicialBranch: string;
 }
 function GeneralInfoContent({
-  customStyle,
   court,
   subjects,
   initDate,

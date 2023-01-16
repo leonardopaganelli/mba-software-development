@@ -15,7 +15,7 @@ interface LawsuitCardProps {
   accused: string;
 }
 function LawsuitCard({ customStyle, lawsuitId, accused }: LawsuitCardProps) {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <Card

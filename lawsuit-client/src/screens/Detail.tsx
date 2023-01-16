@@ -1,6 +1,5 @@
 import { Box, Container, Tab, Tabs } from "@material-ui/core";
-import { TabPanel } from "@material-ui/lab";
-import { useEffect, useState, ReactHTMLElement } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Lawsuit } from "../types/types";
 import http from "../utils/http-common";
@@ -52,7 +51,6 @@ function Detail() {
       <div>Loading</div>
     )
   }
-
 
   return (
     <Box

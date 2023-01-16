@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 
 interface LawsuitGridProps {
   customStyle?: React.CSSProperties;
+  addLawsuitCallback: ()=>void;
 }
 
 interface Lawsuit {
@@ -26,7 +27,7 @@ interface Lawsuit {
   nature: string
 }
 
-function LawsuitGrid({ customStyle }: LawsuitGridProps) {
+function LawsuitGrid({ customStyle, addLawsuitCallback }: LawsuitGridProps) {
   const [lawsuitList, setLawsuitList] = useState([] as Lawsuit[]);
 
   const fetchData = async () => {
@@ -41,19 +42,24 @@ function LawsuitGrid({ customStyle }: LawsuitGridProps) {
   return (
     <GridList style={{ ...customStyle }}>
       <GridListTile key="Subheader" cols={2} style={{ height: "auto" }}>
-        <Typography style={{fontSize: "22px", fontWeight: "bold"}}>Processos</Typography>
+        <Typography style={{ fontSize: "22px", fontWeight: "bold" }}>
+          Processos
+        </Typography>
       </GridListTile>
-      { lawsuitList.map((item) => (
+      {lawsuitList.map((item) => (
         <GridListTile key={item.id}>
-            <LawsuitCard lawsuitId={item.id} accused={item["Involved.acused"]} />
+          <LawsuitCard lawsuitId={item.id} accused={item["Involved.acused"]} />
         </GridListTile>
       ))}
       <GridListTile>
-        <AddLawsuitCard customStyle={{
-          padding: "58px",
-          alignItems: "center"
-        }}/>
-     </GridListTile>
+        <AddLawsuitCard
+          customStyle={{
+            padding: "58px",
+            alignItems: "center",
+          }}
+          onClick={addLawsuitCallback}
+        />
+      </GridListTile>
     </GridList>
   );
 }

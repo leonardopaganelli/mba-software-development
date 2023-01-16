@@ -1,18 +1,25 @@
-import express from "express";
-import routes from "./routes";
-import swaggerDocs from '@utils/swagger.js';
-import kafka from '@repositories/kafka';
+import kafka from "@clients/kafka";
+import { httpServer, io } from "@clients/socket";
+import { sendMessage } from "@clients/msteams";
 
 const port = 3000;
-const app = express();
+
+io.on("connection", (socket) => {
+  console.log("Someone connected!");
+
+  socket.on("teams-message", () => {
+    console.log("Someone example!");
+    sendMessage("Mensagem funcionando com sucesso");
+  });
+});
 
 async function run() {
   await kafka();
 
-  app.listen(port, async () => {
+  httpServer.listen(port, () => {
     console.log(`Server running on port http://127.0.0.1:${port}`);
-    routes(app);
-    swaggerDocs(app, port);
+    // routes(app);
+    // swaggerDocs(app, port);
   });
 }
 

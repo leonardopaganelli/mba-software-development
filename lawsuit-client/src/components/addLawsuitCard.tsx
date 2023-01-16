@@ -1,14 +1,11 @@
-import "../App.scss";
-
 import { Typography, Card } from "@material-ui/core";
-import { useNavigate } from "react-router-dom";
 
 interface AddLawsuitCardProps {
   customStyle?: React.CSSProperties;
+  onClick: () => void;
 }
-function AddLawsuitCard({ customStyle }: AddLawsuitCardProps) {
 
-    const navigate = useNavigate();
+function AddLawsuitCard({ customStyle, onClick }: AddLawsuitCardProps) {
   return (
     <Card
       style={{
@@ -20,10 +17,7 @@ function AddLawsuitCard({ customStyle }: AddLawsuitCardProps) {
         cursor: "pointer",
         ...customStyle,
       }}
-      onClick={(e) => {
-        console.log(e);
-        navigate("/add");
-      }}
+      onClick={onClick}
     >
       <Typography
         style={{
